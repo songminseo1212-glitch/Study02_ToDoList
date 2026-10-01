@@ -3,6 +3,11 @@
 브라우저에서 바로 실행되는 개인용 할 일 관리 앱입니다.
 하루 10~20개 정도의 할 일을 관리하는 용도이며, 순수 JavaScript(HTML + CSS + JS)만 사용합니다.
 
+## 배포 주소 (GitHub Pages)
+
+- 데스크톱 버전: https://songminseo1212-glitch.github.io/Study02_ToDoList/
+- 모바일 버전: https://songminseo1212-glitch.github.io/Study02_ToDoList/mobile_version/
+
 ## 기능
 
 - 할 일 추가 / 수정(더블클릭 또는 [수정] 버튼) / 삭제
