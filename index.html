@@ -7,37 +7,52 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="app">
-    <h1>할 일 관리</h1>
-
-    <section class="progress" aria-label="진행률">
-      <div class="progress-head">
-        <span>진행률</span>
-        <strong id="progress-text">0 / 0 · 0%</strong>
-      </div>
-      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar">
-        <div class="bar-fill" id="progress-fill"></div>
-      </div>
-      <p class="cat-progress" id="cat-progress"></p>
-    </section>
-
-    <form class="add-form" id="add-form">
-      <label class="sr-only" for="new-text">새 할 일</label>
-      <input id="new-text" type="text" maxlength="100" placeholder="할 일을 입력하세요..." autocomplete="off">
-      <label class="sr-only" for="new-category">카테고리</label>
-      <select id="new-category"></select>
-      <button type="submit">추가</button>
-    </form>
-
-    <nav class="tabs" id="tabs" aria-label="카테고리 필터"></nav>
-
-    <ul class="list" id="list"></ul>
-    <p class="empty" id="empty" hidden>할 일이 없습니다. 위에서 추가해 보세요.</p>
-
-    <div class="footer">
-      <button type="button" id="clear-done" class="secondary">완료 항목 지우기</button>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <h1>할 일 관리</h1>
+      <span class="today" id="today"></span>
     </div>
-  </main>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <section class="panel progress" aria-label="진행률">
+        <h2>전체 진행률</h2>
+        <div class="progress-main">
+          <strong class="pct" id="progress-pct">0%</strong>
+          <span class="count" id="progress-text">0 / 0</span>
+        </div>
+        <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar">
+          <div class="bar-fill" id="progress-fill"></div>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="카테고리">
+        <h2>카테고리</h2>
+        <nav class="filters" id="tabs" aria-label="카테고리 필터"></nav>
+      </section>
+
+      <button type="button" id="clear-done" class="secondary block">완료 항목 지우기</button>
+    </aside>
+
+    <main class="main">
+      <form class="add-form panel" id="add-form">
+        <label class="sr-only" for="new-text">새 할 일</label>
+        <input id="new-text" type="text" maxlength="100" placeholder="할 일을 입력하고 Enter를 누르세요" autocomplete="off">
+        <label class="sr-only" for="new-category">카테고리</label>
+        <select id="new-category"></select>
+        <button type="submit">추가</button>
+      </form>
+
+      <div class="list-head">
+        <h2 id="list-title">전체</h2>
+        <span class="list-count" id="list-count"></span>
+      </div>
+
+      <ul class="list" id="list"></ul>
+      <p class="empty" id="empty" hidden>할 일이 없습니다. 위에서 추가해 보세요.</p>
+    </main>
+  </div>
   <script src="app.js"></script>
 </body>
 </html>

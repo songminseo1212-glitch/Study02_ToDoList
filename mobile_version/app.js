@@ -22,12 +22,9 @@
     empty: document.getElementById('empty'),
     clearDone: document.getElementById('clear-done'),
     progressText: document.getElementById('progress-text'),
-    progressPct: document.getElementById('progress-pct'),
     progressBar: document.getElementById('progress-bar'),
     progressFill: document.getElementById('progress-fill'),
-    listTitle: document.getElementById('list-title'),
-    listCount: document.getElementById('list-count'),
-    today: document.getElementById('today')
+    catProgress: document.getElementById('cat-progress')
   };
 
   /* ---------- 저장 / 불러오기 ---------- */
@@ -173,41 +170,24 @@
     var total = state.todos.length;
     var done = state.todos.filter(function (t) { return t.done; }).length;
     var pct = percent(done, total);
-    els.progressText.textContent = done + ' / ' + total;
-    els.progressPct.textContent = pct + '%';
+    els.progressText.textContent = done + ' / ' + total + ' · ' + pct + '%';
     els.progressFill.style.width = pct + '%';
     els.progressBar.setAttribute('aria-valuenow', String(pct));
-  }
 
-  function filterLabel(f) {
-    return f === 'all' ? '전체' : CATEGORIES[f];
+    els.catProgress.textContent = Object.keys(CATEGORIES).map(function (key) {
+      var inCat = state.todos.filter(function (t) { return t.category === key; });
+      var d = inCat.filter(function (t) { return t.done; }).length;
+      return CATEGORIES[key] + ' ' + d + '/' + inCat.length;
+    }).join(' · ');
   }
 
   function renderTabs() {
     els.tabs.textContent = '';
     FILTERS.forEach(function (f) {
-      var inCat = state.todos.filter(function (t) { return f === 'all' || t.category === f; });
-      var d = inCat.filter(function (t) { return t.done; }).length;
-
-      var btn = el('button', 'filter');
+      var btn = el('button', 'tab', f === 'all' ? '전체' : CATEGORIES[f]);
       btn.type = 'button';
       btn.dataset.filter = f;
       btn.setAttribute('aria-pressed', String(state.ui.filter === f));
-
-      var row = el('div', 'filter-row');
-      var name = el('span', 'filter-name');
-      name.appendChild(el('span', 'dot ' + (f === 'all' ? '' : f)));
-      name.appendChild(el('span', '', filterLabel(f)));
-      row.appendChild(name);
-      row.appendChild(el('span', 'filter-count', d + ' / ' + inCat.length));
-
-      var track = el('div', 'mini-bar');
-      var fill = el('div', 'mini-fill ' + (f === 'all' ? '' : f));
-      fill.style.width = percent(d, inCat.length) + '%';
-      track.appendChild(fill);
-
-      btn.appendChild(row);
-      btn.appendChild(track);
       els.tabs.appendChild(btn);
     });
   }
@@ -283,8 +263,6 @@
     els.list.textContent = '';
     visible.forEach(function (t) { els.list.appendChild(renderItem(t)); });
     els.empty.hidden = visible.length > 0;
-    els.listTitle.textContent = filterLabel(filter);
-    els.listCount.textContent = visible.length + '개';
 
     if (editingId) {
       var input = els.list.querySelector('.edit-text');
@@ -374,9 +352,6 @@
 
   /* ---------- 시작 ---------- */
 
-  els.today.textContent = new Date().toLocaleDateString('ko-KR', {
-    year: 'numeric', month: 'long', day: 'numeric', weekday: 'long'
-  });
   fillCategorySelect(els.category, state.ui.lastCategory);
   render();
 })();

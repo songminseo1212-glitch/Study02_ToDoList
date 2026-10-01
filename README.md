@@ -19,9 +19,8 @@
 
 | 파일 | 설명 |
 |---|---|
-| `index.html` | 화면 구조 |
-| `style.css` | 스타일 (모바일 360px 대응) |
-| `app.js` | 앱 로직 (state → save → render 흐름) |
+| `index.html`, `style.css`, `app.js` | 데스크톱 버전 (좌측 사이드바 + 우측 목록 2단 레이아웃, 900px 이하에서는 1단) |
+| `mobile_version/` | 모바일 최적화 버전 (단일 컬럼). 같은 `localStorage` 키를 쓰므로 데이터가 공유됩니다 |
 | [PRD.md](PRD.md) | 제품 요구사항 문서 |
 | [PROMPTS.md](PROMPTS.md) | PRD를 Claude Code용 5단계 프롬프트로 변환한 문서 |
 
